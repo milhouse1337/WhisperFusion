@@ -9,7 +9,8 @@ cd /root/TensorRT-LLM-examples/whisper
 # the sound filter definitions
 wget --directory-prefix=assets https://raw.githubusercontent.com/openai/whisper/main/whisper/assets/mel_filters.npz
 # the small.en model weights
-wget --directory-prefix=assets https://openaipublic.azureedge.net/main/whisper/models/f953ad0fd29cacd07d5a9eda5624af0f6bcf2258be67c92b79389873d91e0872/small.en.pt
+# wget --directory-prefix=assets https://openaipublic.azureedge.net/main/whisper/models/f953ad0fd29cacd07d5a9eda5624af0f6bcf2258be67c92b79389873d91e0872/small.en.pt
+wget --directory-prefix=assets https://openaipublic.azureedge.net/main/whisper/models/e5b1a55b89c1367dacf97e3e19bfd829a01529dbfdeefa8caeb59b3f1b81dadb/large-v3.pt
 
 ## We have to patch the script to add support for out model size (`small.en`):
 patch <<EOF
@@ -27,7 +28,9 @@ EOF
 
 ## Finally we can build the TensorRT engine for the `small.en` Whisper model:
 pip install -r requirements.txt
-python3 build.py --output_dir whisper_small_en --use_gpt_attention_plugin --use_gemm_plugin --use_layernorm_plugin  --use_bert_attention_plugin --model_name small.en
+# python3 build.py --output_dir whisper_small_en --use_gpt_attention_plugin --use_gemm_plugin --use_layernorm_plugin  --use_bert_attention_plugin --model_name small.en
+python3 build.py --output_dir whisper_large_v3 --use_gpt_attention_plugin --use_gemm_plugin --use_layernorm_plugin  --use_bert_attention_plugin --model_name large-v3
 
 mkdir -p /root/scratch-space/models
-cp -r whisper_small_en /root/scratch-space/models
+# cp -r whisper_small_en /root/scratch-space/models
+cp -r whisper_large_v3 /root/scratch-space/models

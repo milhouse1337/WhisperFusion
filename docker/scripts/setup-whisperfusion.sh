@@ -16,6 +16,9 @@ pip install -r requirements.txt
 ## force update huggingface_hub (tokenizers 0.14.1 spuriously require and ancient <=0.18 version)
 pip install -U huggingface_hub
 
+## Fix for transformers
+pip install transformers
+
 huggingface-cli download collabora/whisperspeech t2s-small-en+pl.model s2a-q4-tiny-en+pl.model
 huggingface-cli download charactr/vocos-encodec-24khz
 
