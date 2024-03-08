@@ -14,6 +14,14 @@ RUN bash install-trt-llm.sh && rm install-trt-llm.sh
 
 RUN apt-get update && apt-get install -y xz-utils
 
-WORKDIR /root/
-COPY scripts/setup-whisperfusion.sh /root/
+WORKDIR /root
+COPY scripts/setup-whisperfusion.sh /root
 RUN ./setup-whisperfusion.sh
+
+RUN mkdir /root/scratch-space
+COPY scripts/build-* /root/scratch-space
+COPY scripts/run-whisperfusion.sh /root/scratch-space
+
+EXPOSE 8888 6006
+
+CMD ["/root/scratch-space/run-whisperfusion.sh"]
